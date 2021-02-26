@@ -12,10 +12,27 @@ async function fetchData() {
   return movies;
 }
 
+// async function fetchMovie(id, fetchedMovies) {
+//   if (!fetchedMovies) {
+//     //TODO fetch movies and return it
+//     return null;
+//   }
+//   const result = fetchedMovies.results.find((m) => +m.id === +id);
+//   debugger;
+//   if (result) {
+//     return result;
+//   } else {
+//     //TODO fetch movies and return it
+//     return null;
+//   }
+// }
+
+async function cachedFetch(url, parametersObj) {}
+
 export const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  const [movies, setMovies] = useState();
+  const [movies, setMovies] = useState(null);
 
   useEffect(() => {
     (async function loadData() {
@@ -30,7 +47,7 @@ export function DataProvider({ children }) {
   }, []);
 
   return (
-    <DataContext.Provider value={[movies, setMovies]}>
+    <DataContext.Provider value={{ movies, setMovies }}>
       {children}
     </DataContext.Provider>
   );

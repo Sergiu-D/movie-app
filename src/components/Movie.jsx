@@ -3,8 +3,10 @@ import { DataContext } from "../DataProvider";
 
 export default function Movie({ movie }) {
   return (
-    <div>
-      <h1>Helow</h1>
-    </div>
+    <a href={`/movie_details/${movie.id}`}>
+      <div>
+        <h1>Title: {movie.name || movie.original_title}</h1>
+      </div>
+    </a>
   );
 }
