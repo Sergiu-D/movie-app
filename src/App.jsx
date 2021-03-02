@@ -20,10 +20,12 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState();
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
+    console.log(newValue);
+    console.log(event);
     setValue(newValue);
   };
   return (
@@ -34,9 +36,8 @@ export default function App() {
             <Tabs
               value={value}
               indicatorColor="primary"
-              textColor="primary"
-              onChange={handleChange}
-              aria-label="disabled tabs example"
+              color="primary"
+              onClick={handleChange}
               centered
             >
               <Link to="/">

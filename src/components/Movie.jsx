@@ -21,12 +21,11 @@ const useStyles = makeStyles({
 });
 
 export default function Movie({ movie }) {
-  const movieImage = `https://image.tmdb.org/t/p/w300/${movie.poster_path}`;
   const classes = useStyles();
+  const movieImage = `https://image.tmdb.org/t/p/w300/${movie.poster_path}`;
   const movieName = movie.title || movie.name || movie.original_title;
   const movieNameLength = 30;
 
-  console.log(movie);
   return (
     <a href={`/movie_details/${movie.id}`}>
       <Card className={classes.root}>
