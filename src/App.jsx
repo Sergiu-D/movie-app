@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(2);
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
