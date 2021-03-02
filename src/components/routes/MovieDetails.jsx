@@ -12,7 +12,7 @@ export default function MovieDetails() {
   }
   return (
     <div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{data.overview}</pre>
     </div>
   );
 }
