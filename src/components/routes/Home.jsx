@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import qs from 'query-string';
 import Movie from "../Movie";
+import { getKeyParam, getAPIBaseURL } from "../../helpers";
 
 import { DataContext } from "../../DataProvider";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import useSWR from "swr";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,14 +26,29 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+function qsFromParams(paramsObj) {
+  const params = { ...paramsObj }
+  const keys = Object.keys(params)
+  keys.forEach(k => { if (!params[k]) { delete params[k] } })
+  const queryString = qs.stringify(params)
+  return queryString
+}
+
 const Search = () => {
   // const params = useParams();
   let queryParams = useQuery();
-
-  // console.log(params)
-  let history = useHistory();
   const [query, setQuery] = useState(queryParams.get('query') || '')
   const [adult, setAdult] = useState(queryParams.get('adult') || '')
+
+  const _search = useLocation().search
+  useEffect(() => {
+    console.log('history changed', window.location.search)
+    if (queryParams.get('query') !== query) {
+      setQuery(queryParams.get('query'))
+    }
+  }, [_search])
+
+  let history = useHistory();
   // debugger
   const onChange = ev => {
     // debugger
@@ -39,18 +56,17 @@ const Search = () => {
   }
   const onSubmit = ev => {
     ev.preventDefault()
-    const params = {
-      adult, query
+    const queryString = qsFromParams({
+      adult, query: query ? query.trim() : ''
+    })
+    if (queryString) {
+      history.push(`/search?${queryString}`)
     }
-    const keys = Object.keys(params)
-    keys.forEach(k => { if (!params[k]) { delete params[k] } })
-    const queryString = qs.stringify(params)
-    history.replace(`/search?${queryString}`)
   }
   return (
 
-    <form onSubmit={onSubmit}>
-      <input type="text" onChange={onChange} value={query} />
+    <form onSubmit={onSubmit} >
+      <input required type="text" onChange={onChange} value={query} />
       <input type="checkbox" onChange={() => setAdult(!adult)} defaultChecked={adult} />
       <input type="submit" value="Search" />
     </form>
@@ -60,10 +76,26 @@ const Search = () => {
 
 
 export default function Home() {
-  const { movies, setMovies } = useContext(DataContext);
+  const queryParams = useQuery();
+  const query = queryParams.get('query')
+  const queryString = qsFromParams({
+    query: query,
+    'api_key': process.env.REACT_APP_API_KEY,
+  })
+
+  const url = !query ? `${getAPIBaseURL()}/trending/all/week?${queryString}`
+    : `${getAPIBaseURL()}/search/movie/?${queryString}}`
+
+  console.log(`swr should search for ${url}`)
+
+  // const { movies, setMovies } = useContext(DataContext);
+  const { data: movies, loading, error } = useSWR(url);
+  console.log(`movies`, movies)
+
+
   const classes = useStyles();
 
-  if (movies === null) {
+  if (!movies) {
     return <p>Loading...</p>;
   }
   const { results } = movies;

@@ -11,7 +11,7 @@ import About from "./components/routes/About";
 
 import { DataProvider } from "./DataProvider";
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link,  } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +32,7 @@ export default function App() {
     <main>
       <DataProvider>
         <div className="App">
-          <Router>
+          <Router forceRefresh={false}>
             <Paper className={classes.root}>
               <Tabs
                 value={value}
