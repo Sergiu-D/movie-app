@@ -1,6 +1,6 @@
 import React from "react";
 
-import MovieList from "./components/routes/MovieList";
+import Home from "./components/routes/Home";
 import MovieDetails from "./components/routes/MovieDetails";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -50,9 +50,13 @@ export default function App() {
               </Tabs>
             </Paper>
             <Switch>
-              <Route exact path="/">
-                <MovieList />
+              <Route  exact path="/">
+                <Home />
               </Route>
+              <Route  path="/search">
+                <Home />
+              </Route>
+              
               <Route path="/about">
                 <About />
               </Route>
