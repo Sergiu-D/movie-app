@@ -29,38 +29,40 @@ export default function App() {
     setValue(newValue);
   };
   return (
-    <DataProvider>
-      <div className="App">
-        <Router>
-          <Paper className={classes.root}>
-            <Tabs
-              value={value}
-              indicatorColor="primary"
-              color="primary"
-              onClick={handleChange}
-              centered
-            >
-              <Link to="/">
-                <Tab label="Home" />
-              </Link>
-              <Link to="/about">
-                <Tab label="About" />
-              </Link>
-            </Tabs>
-          </Paper>
-          <Switch>
-            <Route exact path="/">
-              <MovieList />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/movie_details/:id">
-              <MovieDetails />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </DataProvider>
+    <main>
+      <DataProvider>
+        <div className="App">
+          <Router>
+            <Paper className={classes.root}>
+              <Tabs
+                value={value}
+                indicatorColor="primary"
+                color="primary"
+                onClick={handleChange}
+                centered
+              >
+                <Link to="/">
+                  <Tab label="Home" />
+                </Link>
+                <Link to="/about">
+                  <Tab label="About" />
+                </Link>
+              </Tabs>
+            </Paper>
+            <Switch>
+              <Route exact path="/">
+                <MovieList />
+              </Route>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/movie_details/:id">
+                <MovieDetails />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </DataProvider>
+    </main>
   );
 }
