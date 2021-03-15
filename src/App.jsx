@@ -1,6 +1,6 @@
 import React from "react";
 
-import MovieList from "./components/routes/MovieList";
+import Home from "./components/routes/Home";
 import MovieDetails from "./components/routes/MovieDetails";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -11,7 +11,7 @@ import About from "./components/routes/About";
 
 import { DataProvider } from "./DataProvider";
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link,  } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -29,38 +29,44 @@ export default function App() {
     setValue(newValue);
   };
   return (
-    <DataProvider>
-      <div className="App">
-        <Router>
-          <Paper className={classes.root}>
-            <Tabs
-              value={value}
-              indicatorColor="primary"
-              color="primary"
-              onClick={handleChange}
-              centered
-            >
-              <Link to="/">
-                <Tab label="Home" />
-              </Link>
-              <Link to="/about">
-                <Tab label="About" />
-              </Link>
-            </Tabs>
-          </Paper>
-          <Switch>
-            <Route exact path="/">
-              <MovieList />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/movie_details/:id">
-              <MovieDetails />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </DataProvider>
+    <main>
+      <DataProvider>
+        <div className="App">
+          <Router forceRefresh={false}>
+            <Paper className={classes.root}>
+              <Tabs
+                value={value}
+                indicatorColor="primary"
+                color="primary"
+                onClick={handleChange}
+                centered
+              >
+                <Link to="/">
+                  <Tab label="Home" />
+                </Link>
+                <Link to="/about">
+                  <Tab label="About" />
+                </Link>
+              </Tabs>
+            </Paper>
+            <Switch>
+              <Route  exact path="/">
+                <Home />
+              </Route>
+              <Route  path="/search">
+                <Home />
+              </Route>
+              
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/movie_details/:id">
+                <MovieDetails />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </DataProvider>
+    </main>
   );
 }
